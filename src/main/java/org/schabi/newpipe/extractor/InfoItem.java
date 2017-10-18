@@ -22,7 +22,7 @@ package org.schabi.newpipe.extractor;
 
 import java.io.Serializable;
 
-public abstract class InfoItem implements Serializable {
+public abstract class InfoItem extends Info {
     public enum InfoType {
         STREAM,
         PLAYLIST,

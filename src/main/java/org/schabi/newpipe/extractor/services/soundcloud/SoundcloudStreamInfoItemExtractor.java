@@ -39,6 +39,11 @@ public class SoundcloudStreamInfoItemExtractor implements StreamInfoItemExtracto
     }
 
     @Override
+    public String getIdChannel() throws ParsingException {
+        return null;
+    }
+
+    @Override
     public long getViewCount() {
         return searchResult.getNumber("playback_count", 0).longValue();
     }

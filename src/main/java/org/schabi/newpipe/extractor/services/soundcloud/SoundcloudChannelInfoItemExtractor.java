@@ -1,6 +1,7 @@
 package org.schabi.newpipe.extractor.services.soundcloud;
 
 import com.grack.nanojson.JsonObject;
+
 import org.schabi.newpipe.extractor.channel.ChannelInfoItemExtractor;
 
 public class SoundcloudChannelInfoItemExtractor implements ChannelInfoItemExtractor {

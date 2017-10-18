@@ -6,6 +6,7 @@ import org.schabi.newpipe.extractor.playlist.PlaylistInfoItemExtractor;
 import org.schabi.newpipe.extractor.utils.Utils;
 
 public class YoutubePlaylistInfoItemExtractor implements PlaylistInfoItemExtractor {
+
     private Element el;
 
     public YoutubePlaylistInfoItemExtractor(Element el) {
@@ -29,6 +30,21 @@ public class YoutubePlaylistInfoItemExtractor implements PlaylistInfoItemExtract
         }
 
         return url;
+    }
+
+    public String getIdChannel() throws ParsingException {
+        String id;
+
+        try {
+            final Element div = el.select("div[class=\"yt-lockup-byline\"]").first()
+                    .select("a").first();
+
+            id = div.attr("data-ytid");
+        } catch (Exception e) {
+            throw new ParsingException("Failed to extract playlist uploader", e);
+        }
+
+        return id;
     }
 
     @Override

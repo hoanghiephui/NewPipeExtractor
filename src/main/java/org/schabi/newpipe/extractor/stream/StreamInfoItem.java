@@ -32,6 +32,7 @@ public class StreamInfoItem extends InfoItem {
     public String upload_date;
     public long view_count = -1;
     public long duration = -1;
+    public String idChannel;
 
     public StreamInfoItem() {
         super(InfoType.STREAM);

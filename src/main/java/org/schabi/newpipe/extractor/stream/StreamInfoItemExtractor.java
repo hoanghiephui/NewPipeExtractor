@@ -25,12 +25,17 @@ import org.schabi.newpipe.extractor.exceptions.ParsingException;
 
 public interface StreamInfoItemExtractor extends InfoItemExtractor {
     StreamType getStreamType() throws ParsingException;
+
     boolean isAd() throws ParsingException;
 
     long getDuration() throws ParsingException;
+
     long getViewCount() throws ParsingException;
 
     String getUploaderName() throws ParsingException;
+
     String getUploadDate() throws ParsingException;
+
+    String getIdChannel() throws ParsingException;
 
 }

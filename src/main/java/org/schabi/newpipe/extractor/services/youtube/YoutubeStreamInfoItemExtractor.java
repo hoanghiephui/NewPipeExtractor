@@ -126,7 +126,7 @@ public class YoutubeStreamInfoItemExtractor implements StreamInfoItemExtractor {
             return Long.parseLong(Utils.removeNonDigitCharacters(input));
         } catch (NumberFormatException e) {
             // if this happens the video probably has no views
-            if (!input.isEmpty()){
+            if (!input.isEmpty()) {
                 return 0;
             }
 
@@ -151,6 +151,22 @@ public class YoutubeStreamInfoItemExtractor implements StreamInfoItemExtractor {
         } catch (Exception e) {
             throw new ParsingException("Could not get thumbnail url", e);
         }
+    }
+
+    @Override
+    public String getIdChannel() throws ParsingException {
+        String id;
+
+        try {
+            final Element div = item.select("div[class=\"yt-lockup-byline\"]").first()
+                    .select("a").first();
+
+            id = div.attr("data-ytid");
+        } catch (Exception e) {
+            throw new ParsingException("Failed to extract playlist uploader", e);
+        }
+
+        return id;
     }
 
     /**
