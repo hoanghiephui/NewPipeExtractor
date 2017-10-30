@@ -728,7 +728,7 @@ public class YoutubeStreamExtractor extends StreamExtractor {
      * This is encapsulated in a StreamInfoItem object, which is a subset of the fields in a full StreamInfo.
      */
     private StreamInfoItemExtractor extractVideoPreviewInfo(final Element li) {
-        return new YoutubeStreamInfoItemExtractor(li) {
+        return new YoutubeStreamInfoItemExtractor(li, "") {
 
             @Override
             public String getUrl() throws ParsingException {

@@ -38,4 +38,6 @@ public interface StreamInfoItemExtractor extends InfoItemExtractor {
 
     String getIdChannel() throws ParsingException;
 
+    boolean isGetChannelId();
+
 }

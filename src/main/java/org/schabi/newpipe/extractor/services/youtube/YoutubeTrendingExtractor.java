@@ -82,7 +82,7 @@ public class YoutubeTrendingExtractor extends KioskExtractor {
         Element ul = doc.select("ul[class*=\"expanded-shelf-content-list\"]").first();
         for(final Element li : ul.children()) {
             final Element el = li.select("div[class*=\"yt-lockup-dismissable\"]").first();
-            collector.commit(new YoutubeStreamInfoItemExtractor(li) {
+            collector.commit(new YoutubeStreamInfoItemExtractor(li, "") {
                 @Override
                 public String getUrl() throws ParsingException {
                     try {

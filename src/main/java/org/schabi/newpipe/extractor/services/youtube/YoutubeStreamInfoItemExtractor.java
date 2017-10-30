@@ -27,9 +27,11 @@ import org.schabi.newpipe.extractor.utils.Utils;
 public class YoutubeStreamInfoItemExtractor implements StreamInfoItemExtractor {
 
     private final Element item;
+    private final String idChannel;
 
-    public YoutubeStreamInfoItemExtractor(Element item) {
+    public YoutubeStreamInfoItemExtractor(Element item, String idChannel) {
         this.item = item;
+        this.idChannel = idChannel;
     }
 
     @Override
@@ -155,7 +157,7 @@ public class YoutubeStreamInfoItemExtractor implements StreamInfoItemExtractor {
 
     @Override
     public String getIdChannel() throws ParsingException {
-        String id;
+        /*String id;
 
         try {
             final Element div = item.select("div[class=\"yt-lockup-byline\"]").first()
@@ -163,10 +165,29 @@ public class YoutubeStreamInfoItemExtractor implements StreamInfoItemExtractor {
 
             id = div.attr("data-ytid");
         } catch (Exception e) {
-            throw new ParsingException("Failed to extract playlist uploader", e);
-        }
+            try {
+                Element element = item.getElementsByClass("yt-uix-subscription-button").first();
+                if (element == null) element = item.getElementsByClass("yt-uix-subscription-preferences-button").first();
 
-        return id;
+                return element.attr("data-channel-external-id");
+            } catch (Exception ex) {
+                throw new ParsingException("Could not get channel id", ex);
+            }
+            //throw new ParsingException("Failed to extract playlist uploader", e);
+        }*/
+
+        return idChannel;
+    }
+
+    @Override
+    public boolean isGetChannelId() {
+        try {
+            final Element div = item.select("div[class=\"yt-lockup-byline\"]").first()
+                    .select("a").first();
+            return true;
+        } catch (Exception e) {
+            return true;
+        }
     }
 
     /**

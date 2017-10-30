@@ -45,7 +45,9 @@ public class StreamInfoItemCollector extends InfoItemCollector {
         resultItem.url = extractor.getUrl();
         resultItem.name = extractor.getName();
         resultItem.stream_type = extractor.getStreamType();
-        resultItem.idChannel = extractor.getIdChannel();
+        if (extractor.isGetChannelId()) {
+            resultItem.idChannel = extractor.getIdChannel();
+        }
         // optional information
         try {
             resultItem.duration = extractor.getDuration();

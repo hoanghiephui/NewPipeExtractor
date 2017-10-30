@@ -199,7 +199,7 @@ public class YoutubePlaylistExtractor extends PlaylistExtractor {
 
         final UrlIdHandler streamUrlIdHandler = getService().getStreamUrlIdHandler();
         for (final Element li : element.children()) {
-            collector.commit(new YoutubeStreamInfoItemExtractor(li) {
+            collector.commit(new YoutubeStreamInfoItemExtractor(li, getId()) {
                 @Override
                 public boolean isAd() throws ParsingException {
                     return false;

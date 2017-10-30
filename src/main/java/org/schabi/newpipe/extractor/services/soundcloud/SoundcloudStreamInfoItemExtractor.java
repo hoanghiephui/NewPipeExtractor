@@ -44,6 +44,11 @@ public class SoundcloudStreamInfoItemExtractor implements StreamInfoItemExtracto
     }
 
     @Override
+    public boolean isGetChannelId() {
+        return false;
+    }
+
+    @Override
     public long getViewCount() {
         return searchResult.getNumber("playback_count", 0).longValue();
     }
