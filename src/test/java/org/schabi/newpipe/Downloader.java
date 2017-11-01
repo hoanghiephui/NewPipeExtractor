@@ -1,6 +1,6 @@
 package org.schabi.newpipe;
 
-import org.schabi.newpipe.extractor.exceptions.ReCaptchaException;
+import org.extractor.exceptions.ReCaptchaException;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
@@ -33,7 +33,7 @@ import java.util.Map;
  * along with NewPipe.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class Downloader implements org.schabi.newpipe.extractor.Downloader {
+public class Downloader implements org.extractor.Downloader {
 
     private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0";
     private static String mCookies = "";
