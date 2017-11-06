@@ -48,6 +48,9 @@ public abstract class Extractor {
 
     public abstract String getId() throws ParsingException;
     public abstract String getName() throws ParsingException;
+    public String getChannelId() throws ParsingException{
+        return "";
+    }
 
     public String getOriginalUrl() {
         return originalUrl;

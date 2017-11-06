@@ -128,6 +128,15 @@ public class YoutubeStreamExtractor extends StreamExtractor {
     }
 
     @Override
+    public String getChannelId() throws ParsingException {
+        try {
+            return playerArgs.getString("ucid");
+        } catch (Exception ignored) {
+            throw new ParsingException("Could not get the channel id", ignored);
+        }
+    }
+
+    @Override
     public String getUploadDate() throws ParsingException {
         try {
             return doc.select("meta[itemprop=datePublished]").attr(CONTENT);

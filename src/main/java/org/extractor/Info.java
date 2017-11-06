@@ -14,6 +14,7 @@ public abstract class Info implements Serializable {
     public String id;
     public String url;
     public String name;
+    public String channelId;
 
     public List<Throwable> errors = new ArrayList<>();
 

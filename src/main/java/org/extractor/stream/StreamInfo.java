@@ -94,6 +94,7 @@ public class StreamInfo extends Info {
         streamInfo.stream_type = extractor.getStreamType();
         streamInfo.id = extractor.getId();
         streamInfo.name = extractor.getName();
+        streamInfo.channelId = extractor.getChannelId();
         streamInfo.age_limit = extractor.getAgeLimit();
 
         if ((streamInfo.stream_type == StreamType.NONE)
