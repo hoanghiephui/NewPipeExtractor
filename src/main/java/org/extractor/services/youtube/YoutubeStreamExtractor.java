@@ -481,24 +481,28 @@ public class YoutubeStreamExtractor extends StreamExtractor {
      */
     @Override
     public String getErrorMessage() {
-        String errorMessage = doc.select("h1[id=\"unavailable-message\"]").first().text();
-        StringBuilder errorReason;
+        if (doc != null) {
+            String errorMessage = doc.select("h1[id=\"unavailable-message\"]").first().text();
+            StringBuilder errorReason;
 
-        if (errorMessage == null || errorMessage.isEmpty()) {
-            errorReason = null;
-        } else if (errorMessage.contains("GEMA")) {
-            // Gema sometimes blocks youtube music content in germany:
-            // https://www.gema.de/en/
-            // Detailed description:
-            // https://en.wikipedia.org/wiki/GEMA_%28German_organization%29
-            errorReason = new StringBuilder("GEMA");
+            if (errorMessage == null || errorMessage.isEmpty()) {
+                errorReason = null;
+            } else if (errorMessage.contains("GEMA")) {
+                // Gema sometimes blocks youtube music content in germany:
+                // https://www.gema.de/en/
+                // Detailed description:
+                // https://en.wikipedia.org/wiki/GEMA_%28German_organization%29
+                errorReason = new StringBuilder("GEMA");
+            } else {
+                errorReason = new StringBuilder(errorMessage);
+                errorReason.append("  ");
+                errorReason.append(doc.select("[id=\"unavailable-submessage\"]").first().text());
+            }
+
+            return errorReason != null ? errorReason.toString() : null;
         } else {
-            errorReason = new StringBuilder(errorMessage);
-            errorReason.append("  ");
-            errorReason.append(doc.select("[id=\"unavailable-submessage\"]").first().text());
+            return "";
         }
-
-        return errorReason != null ? errorReason.toString() : null;
     }
 
     /*//////////////////////////////////////////////////////////////////////////
@@ -520,16 +524,25 @@ public class YoutubeStreamExtractor extends StreamExtractor {
         Downloader dl = NewPipe.getDownloader();
 
         String pageContent = dl.download(getCleanUrl());
+        if (pageContent == null) {
+            System.out.print("cccc");
+            return;
+        }
+        if (pageContent.equals("")) {
+            return;
+        }
         doc = Jsoup.parse(pageContent, getCleanUrl());
 
         String playerUrl;
         // Check if the video is age restricted
         if (pageContent.contains("<meta property=\"og:restrictions:age")) {
+            System.out.print("aaaa");
             String infoPageResponse = dl.download(String.format(GET_VIDEO_INFO_URL, getId()));
             videoInfoPage = Parser.compatParseMap(infoPageResponse);
             playerUrl = getPlayerUrlFromRestrictedVideo();
             isAgeRestricted = true;
         } else {
+            System.out.print("bbbb");
             JsonObject ytPlayerConfig = getPlayerConfig(pageContent);
             playerArgs = getPlayerArgs(ytPlayerConfig);
             playerUrl = getPlayerUrl(ytPlayerConfig);

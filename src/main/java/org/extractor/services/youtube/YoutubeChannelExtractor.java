@@ -63,6 +63,12 @@ public class YoutubeChannelExtractor extends ChannelExtractor {
 
         String channelUrl = super.getCleanUrl() + CHANNEL_URL_PARAMETERS;
         String pageContent = downloader.download(channelUrl);
+        if (pageContent == null) {
+            return;
+        }
+        if (pageContent.equals("")) {
+            return;
+        }
         doc = Jsoup.parse(pageContent, channelUrl);
 
         if (!fetchingNextStreams) {

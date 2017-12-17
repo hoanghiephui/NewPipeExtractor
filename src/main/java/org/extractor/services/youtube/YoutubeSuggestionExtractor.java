@@ -55,20 +55,24 @@ public class YoutubeSuggestionExtractor extends SuggestionExtractor {
                 + "&q=" + URLEncoder.encode(query, CHARSET_UTF_8);
 
         String response = dl.download(url);
-        // trim JSONP part "JP(...)"
-        response = response.substring(3, response.length()-1);
-        try {
-            JsonArray collection = JsonParser.array().from(response).getArray(1, new JsonArray());
-            for (Object suggestion : collection) {
-                if (!(suggestion instanceof JsonArray)) continue;
-                String suggestionStr = ((JsonArray)suggestion).getString(0);
-                if (suggestionStr == null) continue;
-                suggestions.add(suggestionStr);
-            }
+        if (response != null && !response.equals("")) {
+            // trim JSONP part "JP(...)"
+            response = response.substring(3, response.length() - 1);
+            try {
+                JsonArray collection = JsonParser.array().from(response).getArray(1, new JsonArray());
+                for (Object suggestion : collection) {
+                    if (!(suggestion instanceof JsonArray)) continue;
+                    String suggestionStr = ((JsonArray) suggestion).getString(0);
+                    if (suggestionStr == null) continue;
+                    suggestions.add(suggestionStr);
+                }
 
-            return suggestions;
-        } catch (JsonParserException e) {
-            throw new ParsingException("Could not parse json response", e);
+                return suggestions;
+            } catch (JsonParserException e) {
+                throw new ParsingException("Could not parse json response", e);
+            }
+        } else {
+            return new ArrayList<>();
         }
     }
 }
